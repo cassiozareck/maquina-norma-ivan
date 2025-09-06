@@ -38,7 +38,7 @@ def main():
         
         pc = 0
         while pc < len(instrucoes):
-            instrucao = instrucoes[pc]
+            instrucao = instrucoes[pc] # aqui ta errado, pq o pc é o indice da instrucao, mas o indice nao é o rotulo, talvez tenha que criar uma funçao findRotulo
             print(f"\nInstrução: {instrucao}")
             if instrucao[1] == "zero": # então devemos testar se o registrador escolhido é zero
                 registrador = instrucao[2]
