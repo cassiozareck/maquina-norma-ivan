@@ -5,3 +5,4 @@ ATRIBUI-ZERO-REG0:
 ATRIBUI-ZERO-REG1:
     102: se zero_1 então vá_para 200 senão vá_para 103 
     103: faça sub_1 vá_para 102
+

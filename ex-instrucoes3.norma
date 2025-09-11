@@ -1,7 +1,8 @@
 2            
-2 0      
+2 2      
 
-10: faça ATRIBUI-ZERO-REG0 vá_para 20
+10: faça ATRIBUI-ZERO-REG0 vá_para 11
+11: faça ATRIBUI-ZERO-REG1 vá_para 20
 
 ; programa: A := 0
-; deve retornar [0, 0]a
+; deve retornar [0, 0]
