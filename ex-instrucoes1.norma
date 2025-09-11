@@ -5,3 +5,6 @@
 11: faça add_0 vá_para 12 
 12: faça add_0 vá_para 13 
 13: faça sub_1 vá_para 10
+
+; programa duplica reg_1, e põe em reg_0
+; deve retornar [6, 0, 0, 0]

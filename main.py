@@ -21,6 +21,10 @@ def main():
     nome_arquivo = sys.argv[1]
     linhas = ler_arquivo_linha_por_linha(nome_arquivo)
     
+    macros = ler_macros("macros")
+    print(f"\nMacros encontradas: {macros}")
+
+
     if linhas:
         print("\n=== PARSING DAS LINHAS ===")
         
@@ -42,32 +46,37 @@ def main():
         
         print(f"\nMemória inicial: {memoria}")
         
-        instrucao_atual = instrucoes[0]
-        while instrucao_atual is not None:
-            print(f"\nInstrução: {instrucao_atual}")
+        
+        print(f"\nMemória final: {memoria}")aa
 
-                
-            if instrucao_atual[1] == "zero": # então devemos testar se o registrador escolhido é zero
-                registrador = instrucao_atual[2]
-                if memoria[registrador] == 0: # entao devemos ir para o rotulo verdadeiro
-                    rotulo_verdadeiro = instrucao_atual[3]
-                    proximo_rotulo = rotulo_verdadeiro
-                else:
-                    rotulo_falso = instrucao_atual[4]
-                    proximo_rotulo = rotulo_falso
-            elif instrucao_atual[1] == "add": # então devemos adicionar 1 ao registrador escolhido
-                registrador = instrucao_atual[2]
-                memoria[registrador] += 1
-                proximo_rotulo = instrucao_atual[3]
-            elif instrucao_atual[1] == "sub": # então devemos subtrair 1 do registrador escolhido
-                registrador = instrucao_atual[2]
-                memoria[registrador] -= 1
+
+def executar(instrucoes, memoria, macros):
+    instrucao_atual = instrucoes[0]
+    while instrucao_atual is not None:
+        print(f"\nInstrução: {instrucao_atual}")
+
             
-                proximo_rotulo = instrucao_atual[3]
+        if instrucao_atual[1] == "zero": # então devemos testar se o registrador escolhido é zero
+            registrador = instrucao_atual[2]
+            if memoria[registrador] == 0: # entao devemos ir para o rotulo verdadeiro
+                rotulo_verdadeiro = instrucao_atual[3]
+                proximo_rotulo = rotulo_verdadeiro
+            else:
+                rotulo_falso = instrucao_atual[4]
+                proximo_rotulo = rotulo_falso
+        elif instrucao_atual[1] == "add": # então devemos adicionar 1 ao registrador escolhido
+            registrador = instrucao_atual[2]
+            memoria[registrador] += 1
+            proximo_rotulo = instrucao_atual[3]
+        elif instrucao_atual[1] == "sub": # então devemos subtrair 1 do registrador escolhido
+            registrador = instrucao_atual[2]
+            memoria[registrador] -= 1a
+            proximo_rotulo = instrucao_atual[3]
+        elif instrucao_atual[1] in macros:
+            intrucoes_macro = macros[instrucao_atual[1]]
+            executar(intrucoes_macro, memoria, macros)
+        instrucao_atual = findRotulo(proximo_rotulo, instrucoes)
 
-            instrucao_atual = findRotulo(proximo_rotulo, instrucoes)
-
-        print(f"\nMemória final: {memoria}")
-
+    
 if __name__ == "__main__":
     main()

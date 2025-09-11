@@ -1,0 +1,9 @@
+4               ; quantidade registradores
+2 3 0 0         ; seus valores iniciais
+
+10: se zero_1 então vá_para 20 senão vá_para 11 
+11: faça add_0 vá_para 12 
+12: faça sub_1 vá_para 10
+
+; programa: A = A + B
+; deve retornar [5, 0, 0, 0]

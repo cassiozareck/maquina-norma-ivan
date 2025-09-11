@@ -116,3 +116,69 @@ def parser_linhas_instrucoes(linhas):
             resultado.append(instrucao)
     
     return resultado
+
+def ler_macros(nome_arquivo_macros="macros"):
+    """
+    Lê o arquivo de macros e retorna um dicionário com nome da macro e suas instruções.
+    
+    Args:
+        nome_arquivo_macros (str): Caminho para o arquivo de macros (padrão: "macros")
+        
+    Returns:
+        dict: Dicionário onde a chave é o nome da macro e o valor é uma lista de instruções
+    """
+    macros = {}
+    
+    try:
+        # Verifica se o arquivo existe
+        if not os.path.exists(nome_arquivo_macros):
+            print(f"Erro: Arquivo de macros '{nome_arquivo_macros}' não encontrado.")
+            return macros
+        
+        with open(nome_arquivo_macros, 'r', encoding='utf-8') as arquivo:
+            macro_atual = None
+            instrucoes_macro = []
+            
+            for linha in arquivo:
+                linha = linha.strip()
+                
+                # Se a linha está vazia, pula
+                if not linha:
+                    continue
+                
+                # Se a linha termina com ':', é o nome de uma macro
+                if linha.endswith(':'):
+                    # Se já temos uma macro sendo processada, salva ela no dicionário
+                    if macro_atual is not None:
+                        macros[macro_atual] = instrucoes_macro.copy()
+                    
+                    # Inicia nova macro
+                    macro_atual = linha[:-1]  # Remove o ':'
+                    instrucoes_macro = []
+                
+                # Se não é nome de macro e temos uma macro ativa, adiciona a instrução
+                elif macro_atual is not None:
+                    # Remove comentários da linha
+                    linha_sem_comentario = remover_comentarios(linha)
+                    if linha_sem_comentario:  # Só adiciona se não estiver vazia após remover comentários
+                        instrucoes_macro.append(linha_sem_comentario)
+            
+            # Adiciona a última macro se existir
+            if macro_atual is not None:
+                macros[macro_atual] = instrucoes_macro.copy()
+        
+        print(f"Macros carregadas: {list(macros.keys())}")
+        return macros
+        
+    except FileNotFoundError:
+        print(f"Erro: Arquivo de macros '{nome_arquivo_macros}' não encontrado.")
+        return macros
+    except PermissionError:
+        print(f"Erro: Permissão negada para ler o arquivo de macros '{nome_arquivo_macros}'.")
+        return macros
+    except UnicodeDecodeError:
+        print(f"Erro: Não foi possível decodificar o arquivo de macros '{nome_arquivo_macros}'. Pode não ser um arquivo de texto.")
+        return macros
+    except Exception as e:
+        print(f"Erro ao ler o arquivo de macros '{nome_arquivo_macros}': {e}")
+        return macros
