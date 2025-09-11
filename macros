@@ -1,8 +1,95 @@
-ATRIBUI-ZERO-REG0:
-    100: se zero_0 então vá_para 200 senão vá_para 101 
-    101: faça sub_0 vá_para 100
+; ===========================================
+; ARQUIVO DE MACROS - MÁQUINA NORMA
+; ===========================================
+; Aqui estão três macros básicos para manipular
+; registradores de forma intuitiva:
+;   - ZERAR-REG0
+;   - COPIAR-REG0-REG1
+;   - SOMAR-REG0-REG1-REG3
+; ===========================================
 
-ATRIBUI-ZERO-REG1:
-    102: se zero_1 então vá_para 200 senão vá_para 103 
-    103: faça sub_1 vá_para 102
 
+; -------------------------------------------
+; Macro 1: ZERAR REG0
+; -------------------------------------------
+; Função: esvazia o conteúdo do registrador 0
+; até que ele fique com valor 0.
+; -------------------------------------------
+
+ZERAR-REG0:
+INICIO_ZERAR:   se zero_0 então vá_para FIM_ZERAR senão vá_para TIRA_UM
+TIRA_UM:        sub_0 vá_para INICIO_ZERAR
+FIM_ZERAR:      vá_para 200
+
+
+
+; -------------------------------------------
+; Macro 2: COPIAR REG0 → REG1 (usa REG2 auxiliar)
+; -------------------------------------------
+; Função: copia o valor de REG0 para REG1,
+; mantendo REG0 inalterado. Usa REG2 como temporário.
+; -------------------------------------------
+
+COPIAR-REG0-REG1:
+
+; etapa 1: zerar REG1 e REG2
+INICIO_COPIAR:    se zero_1 então vá_para ZERAR_REG2 senão vá_para LIMPAR_REG1
+LIMPAR_REG1:      sub_1 vá_para INICIO_COPIAR
+ZERAR_REG2:       se zero_2 então vá_para TRANSFERIR_REG0 senão vá_para LIMPAR_REG2
+LIMPAR_REG2:      sub_2 vá_para ZERAR_REG2
+
+; etapa 2: transferir conteúdo de REG0 para REG1 e REG2
+TRANSFERIR_REG0:  se zero_0 então vá_para RESTAURAR_REG0 senão vá_para RETIRAR_REG0
+RETIRAR_REG0:     sub_0 vá_para ADICIONA_REG1
+ADICIONA_REG1:    add_1 vá_para ADICIONA_REG2
+ADICIONA_REG2:    add_2 vá_para TRANSFERIR_REG0
+
+; etapa 3: restaurar REG0 a partir de REG2
+RESTAURAR_REG0:   se zero_2 então vá_para FIM_COPIAR senão vá_para DEVOLVE_REG2
+DEVOLVE_REG2:     sub_2 vá_para DEVOLVE_REG0
+DEVOLVE_REG0:     add_0 vá_para RESTAURAR_REG0
+
+FIM_COPIAR:       vá_para 200
+
+
+
+; -------------------------------------------
+; Macro 3: SOMAR REG0 + REG1 → REG3 (usa REG2 auxiliar)
+; -------------------------------------------
+; Função: soma os valores de REG0 e REG1,
+; colocando o resultado em REG3.
+; REG0 e REG1 permanecem inalterados.
+; Usa REG2 como auxiliar.
+; -------------------------------------------
+
+SOMAR-REG0-REG1-REG3:
+
+; etapa 1: zerar REG3 e REG2
+INICIO_SOMA:    se zero_3 então vá_para ZERAR_REG2 senão vá_para LIMPAR_REG3
+LIMPAR_REG3:    sub_3 vá_para INICIO_SOMA
+ZERAR_REG2:     se zero_2 então vá_para TRANSFERE_REG0 senão vá_para LIMPAR_REG2
+LIMPAR_REG2:    sub_2 vá_para ZERAR_REG2
+
+; etapa 2: transferir REG0 para REG3 (guardando em REG2)
+TRANSFERE_REG0: se zero_0 então vá_para RESTAURA_REG0 senão vá_para RETIRA_REG0
+RETIRA_REG0:    sub_0 vá_para ADICIONA_REG3
+ADICIONA_REG3:  add_3 vá_para GUARDA_REG2
+GUARDA_REG2:    add_2 vá_para TRANSFERE_REG0
+
+; etapa 3: restaurar REG0 a partir de REG2
+RESTAURA_REG0:  se zero_2 então vá_para TRANSFERE_REG1 senão vá_para DEVOLVE_REG2
+DEVOLVE_REG2:   sub_2 vá_para DEVOLVE_REG0
+DEVOLVE_REG0:   add_0 vá_para RESTAURA_REG0
+
+; etapa 4: transferir REG1 para REG3 (guardando em REG2)
+TRANSFERE_REG1: se zero_1 então vá_para RESTAURA_REG1 senão vá_para RETIRA_REG1
+RETIRA_REG1:    sub_1 vá_para ADD_REG3
+ADD_REG3:       add_3 vá_para GUARDA_REG2_B
+GUARDA_REG2_B:  add_2 vá_para TRANSFERE_REG1
+
+; etapa 5: restaurar REG1 a partir de REG2
+RESTAURA_REG1:  se zero_2 então vá_para FIM_SOMA senão vá_para DEVOLVE_REG2_B
+DEVOLVE_REG2_B: sub_2 vá_para DEVOLVE_REG1
+DEVOLVE_REG1:   add_1 vá_para RESTAURA_REG1
+
+FIM_SOMA:       vá_para 200

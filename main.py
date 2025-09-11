@@ -76,10 +76,14 @@ def executar(instrucoes, memoria, macros):
         elif instrucao_atual[1] in macros:
             instrucoes_macro = macros[instrucao_atual[1]]
             executar(instrucoes_macro, memoria, macros)
-            proximo_rotulo = instrucao_atual[3]
+            # Depois de executar a macro, segue o fluxo normal
+            proximo_rotulo = instrucao_atual[3] if len(instrucao_atual) > 3 else None
+
+        if proximo_rotulo is None:
+            break  # terminou execução
         
         instrucao_atual = findRotulo(proximo_rotulo, instrucoes)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     main()

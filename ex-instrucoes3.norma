@@ -1,8 +1,8 @@
-2            
-2 2      
+; Teste 3 - Zerando registradores
+2               ; quantidade de registradores
+2 2             ; valores iniciais: [REG0=2, REG1=2]
 
-10: faça ATRIBUI-ZERO-REG0 vá_para 11
-11: faça ATRIBUI-ZERO-REG1 vá_para 20
+10: ZERAR-REG0
+20: ZERAR-REG1
 
-; programa: A := 0
-; deve retornar [0, 0]
+; Saída esperada: [0, 0]

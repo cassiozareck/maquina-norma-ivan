@@ -115,9 +115,9 @@ def parser_instrucao_unica(linha):
         operacao = operacao_registrador.split("_")[0]
         registrador = operacao_registrador.split("_")[1]
     else:
-        # Pode ser uma macro (sem underscore)
+        # É uma macro (sem underline)
         operacao = operacao_registrador
-        registrador = 0  # Valor padrão para macros (não usado na execução)
+        registrador = None  # Macros não usam registrador direto
     
     rotulo_verdadeiro = partes[2]
     rotulo_falso = partes[3] if len(partes) >= 4 else partes[2]

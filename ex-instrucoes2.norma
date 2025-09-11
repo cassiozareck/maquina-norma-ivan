@@ -1,9 +1,8 @@
-4               ; quantidade registradores
-2 3 0 0         ; seus valores iniciais
+; Teste 2 - Somar dois números simples
+4               ; quantidade de registradores
+2 3 0 0         ; valores iniciais: [REG0=2, REG1=3, REG2=0, REG3=0]
 
-10: se zero_1 então vá_para 20 senão vá_para 11 
-11: faça add_0 vá_para 12 
-12: faça sub_1 vá_para 10
+10: SOMAR-REG0-REG1-REG3 ; soma REG0 + REG1 → REG3
+20: COPIAR-REG3-REG0     ; copia resultado de REG3 para REG0
 
-; programa: A = A + B
-; deve retornar [5, 0, 0, 0]
+; Saída esperada: [5, 0, 0, 0]

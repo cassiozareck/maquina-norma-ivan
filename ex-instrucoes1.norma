@@ -1,10 +1,9 @@
-4               ; quantidade registradores
-0 3 0 0         ; seus valores iniciais
+; Teste 1 - Copiar e somar valores
+4               ; quantidade de registradores
+0 3 0 0         ; valores iniciais: [REG0=0, REG1=3, REG2=0, REG3=0]
 
-10: se zero_1 então vá_para 20 senão vá_para 11 
-11: faça add_0 vá_para 12 
-12: faça add_0 vá_para 13 
-13: faça sub_1 vá_para 10
+10: COPIAR-REG0-REG1     ; copia REG0 → REG1
+20: SOMAR-REG0-REG1-REG3 ; soma REG0 + REG1 → REG3
+30: COPIAR-REG3-REG0     ; copia resultado de REG3 para REG0
 
-; programa duplica reg_1, e põe em reg_0
-; deve retornar [6, 0, 0, 0]
+; Saída esperada: [6, 0, 0, 0]
