@@ -2,6 +2,12 @@ import sys
 import os
 from parse import *
 
+def findRotulo(rotulo, instrucoes):
+    for instrucao in instrucoes:
+        if instrucao[0] == rotulo:
+            return instrucao
+    return None
+
 def main():
     """
     Função principal para lidar com argumentos da linha de comando e ler o arquivo.
@@ -36,29 +42,30 @@ def main():
         
         print(f"\nMemória inicial: {memoria}")
         
-        pc = 0
-        while pc < len(instrucoes):
-            instrucao = instrucoes[pc] # aqui ta errado, pq o pc é o indice da instrucao, mas o indice nao é o rotulo, talvez tenha que criar uma funçao findRotulo
-            print(f"\nInstrução: {instrucao}")
-            if instrucao[1] == "zero": # então devemos testar se o registrador escolhido é zero
-                registrador = instrucao[2]
+        instrucao_atual = instrucoes[0]
+        while instrucao_atual is not None:
+            print(f"\nInstrução: {instrucao_atual}")
+
+                
+            if instrucao_atual[1] == "zero": # então devemos testar se o registrador escolhido é zero
+                registrador = instrucao_atual[2]
                 if memoria[registrador] == 0: # entao devemos ir para o rotulo verdadeiro
-                    rotulo_verdadeiro = instrucao[3]
-                    pc = rotulo_verdadeiro
+                    rotulo_verdadeiro = instrucao_atual[3]
+                    proximo_rotulo = rotulo_verdadeiro
                 else:
-                    rotulo_falso = instrucao[4]
-                    pc = rotulo_falso
-            elif instrucao[1] == "add": # então devemos adicionar 1 ao registrador escolhido
-                registrador = instrucao[2]
+                    rotulo_falso = instrucao_atual[4]
+                    proximo_rotulo = rotulo_falso
+            elif instrucao_atual[1] == "add": # então devemos adicionar 1 ao registrador escolhido
+                registrador = instrucao_atual[2]
                 memoria[registrador] += 1
-                proximo_rotulo = instrucao[3]
-                pc = proximo_rotulo
-            elif instrucao[1] == "sub": # então devemos subtrair 1 do registrador escolhido
-                registrador = instrucao[2]
+                proximo_rotulo = instrucao_atual[3]
+            elif instrucao_atual[1] == "sub": # então devemos subtrair 1 do registrador escolhido
+                registrador = instrucao_atual[2]
                 memoria[registrador] -= 1
-                proximo_rotulo = instrucao[3]
-                pc = proximo_rotulo
-            pc += 1
+            
+                proximo_rotulo = instrucao_atual[3]
+
+            instrucao_atual = findRotulo(proximo_rotulo, instrucoes)
 
         print(f"\nMemória final: {memoria}")
 
