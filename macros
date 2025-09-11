@@ -1,7 +1,7 @@
-ATRIBUI_ZERO_REG0:
+ATRIBUI-ZERO-REG0:
     100: se zero_0 então vá_para 200 senão vá_para 101 
     101: faça sub_0 vá_para 100
 
-ATRIBUI_ZERO_REG1:
+ATRIBUI-ZERO-REG1:
     102: se zero_1 então vá_para 200 senão vá_para 103 
     103: faça sub_1 vá_para 102

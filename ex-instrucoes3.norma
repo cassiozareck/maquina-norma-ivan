@@ -1,7 +1,7 @@
 2            
 2 0      
 
-10: faça ATRIBUIZERO_0 vá_para 20
+10: faça ATRIBUI-ZERO-REG0 vá_para 20
 
 ; programa: A := 0
 ; deve retornar [0, 0]a

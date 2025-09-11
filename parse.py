@@ -78,12 +78,59 @@ def parser_linhas_inicializacao(linhas):
     
     return registradores, valores_iniciais
 
-def parser_linhas_instrucoes(linhas):
+def parser_instrucao_unica(linha):
+    """
+    Parser de uma única linha de instrução (usado tanto para instruções normais quanto para macros).
+    
+    Args:
+        linha (str): Linha de instrução a ser parseada
+        
+    Returns:
+        list: Instrução parseada [rótulo, operação, registrador, rótulo_verdadeiro, rótulo_falso] ou None se inválida
+    """
+    linha = linha.strip()
+    if not linha or linha.startswith(';') or ':' not in linha:
+        return None
+    
+    # Remove comentários da linha
+    linha_sem_comentario = remover_comentarios(linha)
+    
+    # Como só teremos dois tipos de instruções, podemos apenas remover as palavras da sintaxe, dai sobrarão os valores que estamos interessados
+    linha_limpa = linha_sem_comentario.replace(":", "").replace("vá_para", "").replace("então", "").replace("senão", "").replace("faça", "").replace("se", "")
+
+    # Separar a linha em partes
+    partes = linha_limpa.split()
+
+    if len(partes) < 3:
+        return None
+
+    rotulo = partes[0]
+
+    # A parte de operação e registrador vem juntas apenas separadas por underline
+    operacao_registrador = partes[1]
+    
+    # Verifica se é uma macro ou uma operação_register
+    if "_" in operacao_registrador:
+        # Formato tradicional: operacao_registrador
+        operacao = operacao_registrador.split("_")[0]
+        registrador = operacao_registrador.split("_")[1]
+    else:
+        # Pode ser uma macro (sem underscore)
+        operacao = operacao_registrador
+        registrador = 0  # Valor padrão para macros (não usado na execução)
+    
+    rotulo_verdadeiro = partes[2]
+    rotulo_falso = partes[3] if len(partes) >= 4 else partes[2]
+
+    return [int(rotulo), operacao, int(registrador), int(rotulo_verdadeiro), int(rotulo_falso)]
+
+def parser_linhas_instrucoes(linhas, macros=None):
     """
     Parser das linhas de instruções.
     
     Args:
         linhas (list): Lista de linhas do arquivo
+        macros (dict): Dicionário de macros disponíveis (opcional)
         
     Returns:
         list: Lista de instruções, cada uma contendo [rótulo, operação, registrador, rótulo_verdadeiro, rótulo_falso]
@@ -91,41 +138,21 @@ def parser_linhas_instrucoes(linhas):
     resultado = []
     
     for linha in linhas[2:]:
-        linha = linha.strip()
-        if linha and not linha.startswith(';') and ':' in linha:  # Ignora linhas vazias, comentários e linhas sem rótulo
-            # Remove comentários da linha
-            linha_sem_comentario = remover_comentarios(linha)
-            
-            # Como só teremos dois tipos de instruções, podemos apenas remover as palavras da sintaxe, dai sobrarão os valores que estamos interessados
-            linha_limpa = linha_sem_comentario.replace(":", "").replace("vá_para", "").replace("então", "").replace("senão", "").replace("faça", "").replace("se", "")
-
-            # Separar a linha em partes
-            partes = linha_limpa.split()
-
-            rotulo = partes[0]
-
-            # A parte de operação e registrador vem juntas apenas separadas por underline
-            operacao_registrador = partes[1]
-            operacao = operacao_registrador.split("_")[0]
-            registrador = operacao_registrador.split("_")[1]
-            
-            rotulo_verdadeiro = partes[2]
-            rotulo_falso = partes[3] if len(partes) >= 4 else partes[2]
-
-            instrucao = [int(rotulo), operacao, int(registrador), int(rotulo_verdadeiro), int(rotulo_falso)]
+        instrucao = parser_instrucao_unica(linha)
+        if instrucao:
             resultado.append(instrucao)
     
     return resultado
 
 def ler_macros(nome_arquivo_macros="macros"):
     """
-    Lê o arquivo de macros e retorna um dicionário com nome da macro e suas instruções.
+    Lê o arquivo de macros e retorna um dicionário com nome da macro e suas instruções parseadas.
     
     Args:
         nome_arquivo_macros (str): Caminho para o arquivo de macros (padrão: "macros")
         
     Returns:
-        dict: Dicionário onde a chave é o nome da macro e o valor é uma lista de instruções
+        dict: Dicionário onde a chave é o nome da macro e o valor é uma lista de instruções parseadas
     """
     macros = {}
     
@@ -156,12 +183,11 @@ def ler_macros(nome_arquivo_macros="macros"):
                     macro_atual = linha[:-1]  # Remove o ':'
                     instrucoes_macro = []
                 
-                # Se não é nome de macro e temos uma macro ativa, adiciona a instrução
+                # Se não é nome de macro e temos uma macro ativa, adiciona a instrução parseada
                 elif macro_atual is not None:
-                    # Remove comentários da linha
-                    linha_sem_comentario = remover_comentarios(linha)
-                    if linha_sem_comentario:  # Só adiciona se não estiver vazia após remover comentários
-                        instrucoes_macro.append(linha_sem_comentario)
+                    instrucao_parseada = parser_instrucao_unica(linha)
+                    if instrucao_parseada:  # Só adiciona se a instrução foi parseada com sucesso
+                        instrucoes_macro.append(instrucao_parseada)
             
             # Adiciona a última macro se existir
             if macro_atual is not None:
