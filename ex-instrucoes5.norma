@@ -1,0 +1,8 @@
+5               ; quantidade de registradores
+5 9 0 0 0       ; valores iniciais: R0=5, R1=9, R2=0, R3=0, R4=0
+
+10: faça MAIOR-A-B vá_para 999
+
+999:
+; Objetivo: R2 = maior(R0, R1), preservando R0 e R1
+; Memória final esperada: [5, 9, 9, 0, 0]

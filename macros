@@ -5,6 +5,7 @@ ATRIBUI-ZERO-REG0:
 ATRIBUI-ZERO-REG1:
     102: se zero_1 então vá_para 200 senão vá_para 103 
     103: faça sub_1 vá_para 102
+    
 
 SOMA-A-B:
     101: se zero_1 vá_para 109 senão vá_para 102
@@ -16,3 +17,127 @@ TESTE-MACRO-DENTRO-MACRO:
     101: se zero_1 vá_para 109 senão vá_para 102
     102: faça ATRIBUI-ZERO-REG1 vá_para 103
     103: faça ATRIBUI-ZERO-REG0 vá_para 101
+
+ATRIBUI-ZERO-REG0:
+    100: se zero_0 então vá_para 200 senão vá_para 101 
+    101: faça sub_0 vá_para 100
+
+ATRIBUI-ZERO-REG1:
+    102: se zero_1 então vá_para 200 senão vá_para 103 
+    103: faça sub_1 vá_para 102
+    
+SOMA-A-B:
+    104: se zero_1 então vá_para 107 senão vá_para 105
+    105: faça add_0 vá_para 106
+    106: faça sub_1 vá_para 104
+    107:
+
+TESTE-MACRO-DENTRO-MACRO:
+    108: se zero_1 então vá_para 111 senão vá_para 109
+    109: faça ATRIBUI-ZERO-REG1 vá_para 110
+    110: faça ATRIBUI-ZERO-REG0 vá_para 108
+    111:
+
+ZERA-R2:
+    112: se zero_2 então vá_para 114 senão vá_para 113
+    113: faça sub_2 vá_para 112
+    114:
+
+ZERA-R3:
+    115: se zero_3 então vá_para 117 senão vá_para 116
+    116: faça sub_3 vá_para 115
+    117:
+
+ZERA-R4:
+    120: se zero_4 então vá_para 122 senão vá_para 121
+    121: faça sub_4 vá_para 120
+    122:
+
+COPIA-R0-PARA-R3:
+    200: faça ZERA-R3 vá_para 201
+    201: faça ZERA-R2 vá_para 202
+    202: se zero_0 então vá_para 206 senão vá_para 203
+    203: faça sub_0 vá_para 204
+    204: faça add_3 vá_para 205
+    205: faça add_2 vá_para 202
+    206: se zero_2 então vá_para 209 senão vá_para 207
+    207: faça sub_2 vá_para 208
+    208: faça add_0 vá_para 206
+    209:
+
+COPIA-R1-PARA-R4:
+    300: faça ZERA-R4 vá_para 301
+    301: faça ZERA-R2 vá_para 302
+    302: se zero_1 então vá_para 306 senão vá_para 303
+    303: faça sub_1 vá_para 304
+    304: faça add_4 vá_para 305
+    305: faça add_2 vá_para 302
+    306: se zero_2 então vá_para 309 senão vá_para 307
+    307: faça sub_2 vá_para 308
+    308: faça add_1 vá_para 306
+    309:
+
+COPIA-R0-PARA-R2:
+    400: faça ZERA-R2 vá_para 401
+    401: faça ZERA-R3 vá_para 402
+    402: se zero_0 então vá_para 406 senão vá_para 403
+    403: faça sub_0 vá_para 404
+    404: faça add_2 vá_para 405
+    405: faça add_3 vá_para 402
+    406: se zero_3 então vá_para 409 senão vá_para 407
+    407: faça sub_3 vá_para 408
+    408: faça add_0 vá_para 406
+    409:
+
+COPIA-R1-PARA-R2:
+    500: faça ZERA-R2 vá_para 501
+    501: faça ZERA-R3 vá_para 502
+    502: se zero_1 então vá_para 506 senão vá_para 503
+    503: faça sub_1 vá_para 504
+    504: faça add_2 vá_para 505
+    505: faça add_3 vá_para 502
+    506: se zero_3 então vá_para 509 senão vá_para 507
+    507: faça sub_3 vá_para 508
+    508: faça add_1 vá_para 506
+    509:
+
+MAIOR-A-B:
+    800: faça COPIA-R0-PARA-R3 vá_para 801
+    801: faça COPIA-R1-PARA-R4 vá_para 802
+    802: se zero_3 então vá_para 805 senão vá_para 803
+    803: se zero_4 então vá_para 806 senão vá_para 804
+    804: faça sub_3 vá_para 807
+    807: faça sub_4 vá_para 802
+    805: faça COPIA-R1-PARA-R2 vá_para 880
+    806: faça COPIA-R0-PARA-R2 vá_para 880
+    880: faça ZERA-R3 vá_para 881
+    881: faça ZERA-R4 vá_para 899
+    899:
+
+MENOR-A-B:
+    900: faça COPIA-R0-PARA-R3 vá_para 901
+    901: faça COPIA-R1-PARA-R4 vá_para 902
+    902: se zero_3 então vá_para 905 senão vá_para 903
+    903: se zero_4 então vá_para 906 senão vá_para 904
+    904: faça sub_3 vá_para 907
+    907: faça sub_4 vá_para 902
+    905: faça COPIA-R0-PARA-R2 vá_para 980
+    906: faça COPIA-R1-PARA-R2 vá_para 980
+    980: faça ZERA-R3 vá_para 981
+    981: faça ZERA-R4 vá_para 999
+    999:
+
+IGUAL-A-B:
+    1000: faça COPIA-R0-PARA-R3 vá_para 1001
+    1001: faça COPIA-R1-PARA-R4 vá_para 1002
+    1002: se zero_3 então vá_para 1005 senão vá_para 1003
+    1003: se zero_4 então vá_para 1006 senão vá_para 1004
+    1004: faça sub_3 vá_para 1007
+    1007: faça sub_4 vá_para 1002
+    1005: se zero_4 então vá_para 1008 senão vá_para 1006
+    1006: faça ZERA-R2 vá_para 1080
+    1008: faça ZERA-R2 vá_para 1009
+    1009: faça add_2 vá_para 1080
+    1080: faça ZERA-R3 vá_para 1081
+    1081: faça ZERA-R4 vá_para 1099
+    1099:

@@ -1,0 +1,11 @@
+5               ; quantidade de registradores
+5 9 0 0 0       ; valores iniciais: R0=5, R1=9
+
+10: faça MENOR-A-B vá_para 999
+
+; --- Fim do Programa ---
+; Objetivo: R2 = menor(R0, R1), preservando R0 e R1.
+; O menor valor (5) deve ser colocado em R2.
+;
+; Memória final esperada: [5, 9, 5, 0, 0] 
+999:
