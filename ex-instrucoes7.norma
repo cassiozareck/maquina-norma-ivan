@@ -1,0 +1,11 @@
+5               ; quantidade de registradores
+10 10 0 0 0       ; valores iniciais: R0=7, R1=7
+
+10: faça IGUAL-A-B vá_para 999
+
+; --- Fim do Programa ---
+; Objetivo: Verificar se R0 e R1 são iguais.
+; O resultado (1, para verdadeiro) deve ir para R2.
+;
+; Memória final esperada: [7, 7, 1, 0, 0] 
+999:
