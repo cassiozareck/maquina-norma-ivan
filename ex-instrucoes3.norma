@@ -4,5 +4,7 @@
 10: faça ATRIBUI-ZERO-REG0 vá_para 11
 11: faça ATRIBUI-ZERO-REG1 vá_para 20
 
-; programa: A := 0
+; programa: 
+;    A := 0
+;    B := 0 
 ; deve retornar [0, 0]

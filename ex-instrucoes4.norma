@@ -1,0 +1,8 @@
+2            
+2 2      
+
+10: faça SOMA-A-B vá_para 11
+11: faça add_0 vá_para  20
+
+; programa: A := A + B + 1
+; deve retornar [5, 0]

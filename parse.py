@@ -115,7 +115,7 @@ def parser_instrucao_unica(linha):
         operacao = operacao_registrador.split("_")[0]
         registrador = operacao_registrador.split("_")[1]
     else:
-        # Pode ser uma macro (sem underscore)
+        # Pode ser uma macro (sem underline)
         operacao = operacao_registrador
         registrador = 0  # Valor padrão para macros (não usado na execução)
     

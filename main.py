@@ -50,11 +50,13 @@ def main():
         
         print(f"\nMemória final: {memoria}")
 
-
+# Itera sobre cada instrução, executando conforme o tipo
 def executar(instrucoes, memoria, macros):
     instrucao_atual = instrucoes[0]
+    
     while instrucao_atual is not None:
         print(f"\nInstrução: {instrucao_atual}")
+        print("Rótulo atual:", instrucao_atual[0], "Memória:", memoria)	
 
         proximo_rotulo = None
         if instrucao_atual[1] == "zero": # então devemos testar se o registrador escolhido é zero
@@ -65,14 +67,17 @@ def executar(instrucoes, memoria, macros):
             else:
                 rotulo_falso = instrucao_atual[4]
                 proximo_rotulo = rotulo_falso
+
         elif instrucao_atual[1] == "add": # então devemos adicionar 1 ao registrador escolhido
             registrador = instrucao_atual[2]
             memoria[registrador] += 1
             proximo_rotulo = instrucao_atual[3]
+        
         elif instrucao_atual[1] == "sub": # então devemos subtrair 1 do registrador escolhido
             registrador = instrucao_atual[2]
             memoria[registrador] -= 1
             proximo_rotulo = instrucao_atual[3]
+        
         elif instrucao_atual[1] in macros:
             instrucoes_macro = macros[instrucao_atual[1]]
             executar(instrucoes_macro, memoria, macros)

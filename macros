@@ -6,3 +6,13 @@ ATRIBUI-ZERO-REG1:
     102: se zero_1 então vá_para 200 senão vá_para 103 
     103: faça sub_1 vá_para 102
 
+SOMA-A-B:
+    101: se zero_1 vá_para 109 senão vá_para 102
+    102: faça add_0 vá_para 103
+    103: faça sub_1 vá_para 101
+    109: vá_para 2
+    
+TESTE-MACRO-DENTRO-MACRO:
+    101: se zero_1 vá_para 109 senão vá_para 102
+    102: faça ATRIBUI-ZERO-REG1 vá_para 103
+    103: faça ATRIBUI-ZERO-REG0 vá_para 101
