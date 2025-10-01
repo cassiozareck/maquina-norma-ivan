@@ -64,12 +64,3 @@ Exemplo:
 ```bash
 python main.py ex-instrucoes1.norma
 ```
-
-### Status do Projeto
-
-- [x] Criar parser da linguagem
-- [x] Criar inicializador de registradores e quantidade de registradores
-- [ ] Permitir outros tipos de rótulos
-- [ ] Criar as operações (testa se zero, adiciona em reg x ou y)
-- [ ] Criar 3 macros escolhidas
-- [ ] Apresentar saída da computação

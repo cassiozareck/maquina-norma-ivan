@@ -55,7 +55,7 @@ def executar(instrucoes, memoria, macros):
     instrucao_atual = instrucoes[0]
     
     while instrucao_atual is not None:
-        print(f"\nInstrução: {instrucao_atual}")
+        #print(f"\nInstrução: {instrucao_atual}")
         print("Rótulo atual:", instrucao_atual[0], "Memória:", memoria)	
 
         proximo_rotulo = None

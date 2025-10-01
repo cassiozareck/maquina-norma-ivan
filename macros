@@ -6,37 +6,17 @@ ATRIBUI-ZERO-REG1:
     102: se zero_1 então vá_para 200 senão vá_para 103 
     103: faça sub_1 vá_para 102
     
-
-SOMA-A-B:
-    101: se zero_1 vá_para 109 senão vá_para 102
-    102: faça add_0 vá_para 103
-    103: faça sub_1 vá_para 101
-    109: vá_para 2
     
 TESTE-MACRO-DENTRO-MACRO:
-    101: se zero_1 vá_para 109 senão vá_para 102
+    101: se zero_1 então vá_para 109 senão vá_para 102
     102: faça ATRIBUI-ZERO-REG1 vá_para 103
     103: faça ATRIBUI-ZERO-REG0 vá_para 101
 
-ATRIBUI-ZERO-REG0:
-    100: se zero_0 então vá_para 200 senão vá_para 101 
-    101: faça sub_0 vá_para 100
-
-ATRIBUI-ZERO-REG1:
-    102: se zero_1 então vá_para 200 senão vá_para 103 
-    103: faça sub_1 vá_para 102
-    
 SOMA-A-B:
     104: se zero_1 então vá_para 107 senão vá_para 105
     105: faça add_0 vá_para 106
     106: faça sub_1 vá_para 104
     107:
-
-TESTE-MACRO-DENTRO-MACRO:
-    108: se zero_1 então vá_para 111 senão vá_para 109
-    109: faça ATRIBUI-ZERO-REG1 vá_para 110
-    110: faça ATRIBUI-ZERO-REG0 vá_para 108
-    111:
 
 ZERA-R2:
     112: se zero_2 então vá_para 114 senão vá_para 113

@@ -175,8 +175,8 @@ def ler_macros(nome_arquivo_macros="macros"):
                 
                 # Se a linha termina com ':', é o nome de uma macro
                 if linha.endswith(':'):
-                    # Se já temos uma macro sendo processada, salva ela no dicionário
-                    if macro_atual is not None:
+                    # Se já temos uma macro sendo processada, salva ela no dicionário se tiver instruções
+                    if macro_atual is not None and instrucoes_macro:
                         macros[macro_atual] = instrucoes_macro.copy()
                     
                     # Inicia nova macro
@@ -189,8 +189,8 @@ def ler_macros(nome_arquivo_macros="macros"):
                     if instrucao_parseada:  # Só adiciona se a instrução foi parseada com sucesso
                         instrucoes_macro.append(instrucao_parseada)
             
-            # Adiciona a última macro se existir
-            if macro_atual is not None:
+            # Adiciona a última macro se existir e tiver instruções
+            if macro_atual is not None and instrucoes_macro:
                 macros[macro_atual] = instrucoes_macro.copy()
         
         print(f"Macros carregadas: {list(macros.keys())}")
